@@ -2,8 +2,43 @@
 
 \usepackage{etoolbox}
 
-\global\def\وظیفه #1 #2 {\listadd\users{#1} \listadd\tasks{#2}}
+\global\def\وظیفه #1 {\def\task_title{#1}}
 
+\newcommand{\مجری}[2]{\listgadd\users{#1}\listgadd\tasks{#2}}
+\newcommand{\خوبی}[1]{\listgadd\pros{#1}}
+\newcommand{\بدی}[2]{\listgadd\cons{#1}\listgadd\proofs{#2}}
+
+\global\def\بساز {
+	\subsection{\task_title}
+
+	\subsubsection{افراد مرتبط}
+	\renewcommand*{\do}[1]{##1، }
+	\dolistloop{\users}
+	\begin{enumerate}
+		\renewcommand*{\do}[1]{\item ##1}
+		\dolistloop{\tasks}
+	\end{enumerate}
+	
+	\subsubsection{خوبی ها}
+	\begin{enumerate}
+		\renewcommand*{\do}[1]{\item ##1}
+		\dolistloop{\pros}
+	\end{enumerate}
+	
+	\subsubsection{بدی ها}
+	\begin{enumerate}
+		\renewcommand*{\do}[1]{\item ##1}
+		\dolistloop{\cons}
+	\end{enumerate}
+	
+	\subsubsection{راهکار ها}
+	\begin{enumerate}
+		\renewcommand*{\do}[1]{\item ##1}
+		\dolistloop{\proofs}
+	\end{enumerate}
+
+	
+	\global\def\task_title{} }
 
 
 \usepackage{xepersian}
