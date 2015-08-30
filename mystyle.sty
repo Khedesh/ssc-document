@@ -2,14 +2,39 @@
 
 \usepackage{etoolbox}
 
+% -----------------------------
+% tasks
 \newcounter{preTaskCounter}
 
-\newcommand{\وظیفه}[1]{
-	\ifdef{\users}{\renewcommand*{\users}{}}{\newcommand*{\users}{}}
+\newcommand{\cleanvars}{	\ifdef{\users}{\renewcommand*{\users}{}}{\newcommand*{\users}{}}
 	\ifdef{\tasks}{\renewcommand*{\tasks}{}}{\newcommand*{\tasks}{}}
 	\ifdef{\pros}{\renewcommand*{\pros}{}}{\newcommand*{\pros}{}}
 	\ifdef{\cons}{\renewcommand*{\cons}{}}{\newcommand*{\cons}{}}
 	\ifdef{\proofs}{\renewcommand*{\proofs}{}}{\newcommand*{\proofs}{}}
+	}
+	
+\newcommand{\prosandcons}{
+	\subsubsection{خوبی ها}
+	\begin{enumerate}
+		\renewcommand*{\do}[1]{\item ##1}
+		\dolistloop{\pros}
+	\end{enumerate}
+	
+	\subsubsection{بدی ها}
+	\begin{enumerate}
+		\renewcommand*{\do}[1]{\item ##1}
+		\dolistloop{\cons}
+	\end{enumerate}
+	
+	\subsubsection{راهکار ها}
+	\begin{enumerate}
+		\renewcommand*{\do}[1]{\item ##1}
+		\dolistloop{\proofs}
+	\end{enumerate}
+	}
+
+\newcommand{\وظیفه}[1]{
+	\cleanvars
 	\ifdef{\tasktitle}{\renewcommand*{\tasktitle}{#1}}{\newcommand*{\tasktitle}{#1}}
 	\stepcounter{preTaskCounter}
 	 }
@@ -31,25 +56,25 @@
 		\dolistloop{\tasks}
 	\end{enumerate}
 	
-	\subsubsection{خوبی ها}
-	\begin{enumerate}
-		\renewcommand*{\do}[1]{\item ##1}
-		\dolistloop{\pros}
-	\end{enumerate}
-	
-	\subsubsection{بدی ها}
-	\begin{enumerate}
-		\renewcommand*{\do}[1]{\item ##1}
-		\dolistloop{\cons}
-	\end{enumerate}
-	
-	\subsubsection{راهکار ها}
-	\begin{enumerate}
-		\renewcommand*{\do}[1]{\item ##1}
-		\dolistloop{\proofs}
-	\end{enumerate}
+	\prosandcons
 
 	}
+	
+% ------------------------------
+% workshops
+\newenvironment{workshop}[4]{
+	\cleanvars
+	\subsection{#1}
+	\subsubsection{توضیح کلی}
+	\begin{center}
+		\begin{tabularx}{\textwidth}{XXX}
+			تاریخ: #2 & استاد: #3 & تعداد شرکت کنندگان: #4 نفر
+		\end{tabularx}
+	\end{center}
+	}{\prosandcons}
+	
+\newcommand{\ورکشاپ}[4]{\begin{workshop}{#1}{#2}{#3}{#4}}
+\newcommand{\تمام}{\end{workshop}}	
 
 \usepackage{tabularx}
 \usepackage{xepersian}
